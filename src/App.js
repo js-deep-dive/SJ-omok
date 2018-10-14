@@ -129,7 +129,7 @@ const Board = class extends Component {
     console.log(fillCells);
   }
 
-  getSnapshotBeforeUpdate() {
+  shouldComponentUpdate(props, state) {
     const fillCells = this.state.boardData.flatMap(row => row.filter(cell => cell.isFill));
 
     const newBoardHistory = this.state.boardHistory;
@@ -137,10 +137,8 @@ const Board = class extends Component {
     newBoardHistory.push(this.state.boardData);
 
     this.checkHorizontal(fillCells);
-    
-    this.setState({
-      boardHistory: [...newBoardHistory]
-    });
+
+    return true;
   }
 
   toggleColor() {
@@ -172,7 +170,7 @@ const Board = class extends Component {
   onClickHistory(index) {
     this.setState({
       boardData: [...this.state.boardHistory[index]],
-      newBoardHistory: [...this.state.boardHistory.slice(0, index)
+      newBoardHistory: [...this.state.boardHistory.slice(0, index)]
     })
   }
 }
